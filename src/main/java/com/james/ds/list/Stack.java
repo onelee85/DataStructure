@@ -2,6 +2,7 @@ package com.james.ds.list;
 
 import java.util.ArrayList;
 
+import static com.james.ds.Utils.pln;
 /**
  *栈
  */
@@ -18,6 +19,11 @@ public class Stack<T> {
         arr.add(t);
     }
 
+    public T top(){
+        if(arr.size() == 0) return null;
+        return arr.get(arr.size()-1);
+    }
+
     public T popTop(){
         if(arr.size() == 0) return null;
         return arr.remove(arr.size()-1);
@@ -25,5 +31,15 @@ public class Stack<T> {
 
     public Boolean isEmpty(){
         return arr.size() == 0;
+    }
+
+    public void clear(){
+        arr.clear();
+    }
+
+    public void print(){
+        for (T item : arr) {
+            pln(item);
+        }
     }
 }

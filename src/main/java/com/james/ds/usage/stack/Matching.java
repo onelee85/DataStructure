@@ -19,7 +19,7 @@ public class Matching {
     public static Boolean match(String expression){
         Stack<String> s = new Stack<String>();
         for(char c :expression.toCharArray()){
-            String str = c+"";
+            String str = String.valueOf(c);
             if(str.equals(left))
                 s.push(str);
             else if(str.equals(right) && s.popTop() == null){
