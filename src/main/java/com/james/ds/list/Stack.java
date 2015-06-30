@@ -3,7 +3,7 @@ package com.james.ds.list;
 import java.util.ArrayList;
 
 /**
- *
+ *栈
  */
 public class Stack<T> {
 
@@ -21,5 +21,9 @@ public class Stack<T> {
     public T popTop(){
         if(arr.size() == 0) return null;
         return arr.remove(arr.size()-1);
+    }
+
+    public Boolean isEmpty(){
+        return arr.size() == 0;
     }
 }
