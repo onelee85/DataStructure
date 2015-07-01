@@ -2,6 +2,8 @@ package com.james.ds.list;
 
 import java.util.LinkedList;
 
+import static com.james.ds.Utils.pn;
+
 /**
  * 队列
  */
@@ -23,5 +25,11 @@ public class Queue<T> {
 
     public void clear(){
         link.clear();
+    }
+
+    public void print(){
+        for (T item : link) {
+            pn(item+"\t");
+        }
     }
 }

@@ -1,21 +1,15 @@
 package com.james.ds.usage.stack;
 
+import com.james.ds.list.Queue;
 import com.james.ds.list.Stack;
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static com.james.ds.Utils.*;
+import static com.james.ds.Utils.isDigit;
+import static com.james.ds.Utils.pln;
 
 /**
- * 延迟缓冲
- *
- * 处理速度和读取速度不同步， 需要缓冲需要处理的数值 稍后进行处理
- *
- * 中缀表达式求值
+ * 逆波兰表达式
  */
-public class Expression {
+public class RePolishExpression {
     enum Operator{
         NULL,ADD,SUB,MUL,DIV,LP,RP;
     }
@@ -78,7 +72,9 @@ public class Expression {
         return result;
     }
 
-    public static Integer evaluate(String expression) {
+    public static Queue<String> reverseRPN(String expression) {
+        expression = expression+"\0";
+        Queue<String> RPN = new Queue<String>();
         Stack<Integer> num_statck = new Stack<Integer>(); //操作数栈
         Stack<Integer> num_child_s = new Stack<Integer>(); //操作数栈子栈
         Stack<String> opt_statck = new Stack<String>(); //操作符栈
@@ -95,8 +91,12 @@ public class Expression {
                 continue;
             }
             //清除操作数
-            num_child_s.clear();
+            if(!num_child_s.isEmpty()){
+                RPN.enQueue(num_statck.top().toString());
+                num_child_s.clear();
+            }
             if (!opt_statck.isEmpty()) {
+
                 int optr1 = getOperator(opt_statck.top().charAt(0));
                 int optr2 = getOperator(c);
                 char pri = PRI[optr1][optr2];
@@ -104,10 +104,11 @@ public class Expression {
                     case '>':
                         //比较之前栈内操作数优先级
                         //如果比之前优先级小或者相等，则弹出2个操作数和1个操作符进行计算
-                        Integer num2 = num_statck.popTop();
-                        Integer num1 = num_statck.popTop();
+                        //Integer num2 = num_statck.popTop();
+                        //Integer num1 = num_statck.popTop();
                         String opt = opt_statck.popTop();
-                        num_statck.push(caculate(num1, opt.charAt(0), num2));
+                        //num_statck.push(caculate(num1, opt.charAt(0), num2));
+                        RPN.enQueue(opt);
                         break;
                     case '<': //操作符继续入栈
                         opt_statck.push(String.valueOf(c));
@@ -120,12 +121,30 @@ public class Expression {
                 }
             }
         }
+        num_statck.clear();
+        opt_statck.clear();
+        return RPN;
+    }
 
-        return num_statck.popTop();
+    public static String evaluate(Queue<String> RPN){
+        Stack<String> opt_statck = new Stack<String>();
+        while(!RPN.isEmpty()){
+            String val = RPN.deQueue();
+            if (isDigit(val)) {//操作数入栈
+                opt_statck.push(val);
+            }else{
+                Integer num2 = Integer.valueOf(opt_statck.popTop());
+                Integer num1 = Integer.valueOf(opt_statck.popTop());
+                opt_statck.push(caculate(num1, val.charAt(0), num2).toString());
+            }
+        }
+        return opt_statck.popTop();
     }
 
     public static void main(String[] args) {
-        System.out.println(evaluate("(1+2*5)*(2+1)\0"));
-
+        Queue<String> RPN = reverseRPN("(11+2*5)*(2+1)");
+        RPN.print();
+        pln("");
+        pln(evaluate(RPN));
     }
 }

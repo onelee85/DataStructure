@@ -2,7 +2,7 @@ package com.james.ds.list;
 
 import java.util.ArrayList;
 
-import static com.james.ds.Utils.pln;
+import static com.james.ds.Utils.*;
 /**
  *栈
  */
@@ -39,7 +39,7 @@ public class Stack<T> {
 
     public void print(){
         for (T item : arr) {
-            pln(item);
+            pn(item+"\t");
         }
     }
 }
