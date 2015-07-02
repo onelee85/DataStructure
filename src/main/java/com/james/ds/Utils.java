@@ -14,6 +14,9 @@ public class Utils {
     public static void pln(Object content){
         System.out.println(content);
     }
+    public static void pln(){
+        System.out.println();
+    }
     public static void pn(Object content){
         System.out.print(content);
     }
