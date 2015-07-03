@@ -30,11 +30,18 @@ public class Test {
         binaryTree.travRecurPost(binaryTree.root());
         pln();
         pln("++++++++++++++++++非递归周游++++++++++++++++++");
-        //非递归周游
         binaryTree.travPre(binaryTree.root());
         pln();
+        binaryTree.travPre_v2(binaryTree.root());
+        pln();
+        binaryTree.travPre_v3(binaryTree.root());
+        pln();
+
         binaryTree.travIn(binaryTree.root());
         pln();
+        binaryTree.travIn_v2(binaryTree.root());
+        pln();
+
         binaryTree.travPost(binaryTree.root());
         pln();
     }
