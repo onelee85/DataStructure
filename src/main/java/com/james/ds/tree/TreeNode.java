@@ -4,11 +4,23 @@ package com.james.ds.tree;
  * 二叉树树节点
  */
 public class TreeNode<T> {
+	enum Tag {
+		Left, Right;
+	}
     private T data;
     private TreeNode<T> liftChild;
     private TreeNode<T> rightChild;
+    private Tag tag;
+    
+    public Tag getTag() {
+		return tag;
+	}
 
-    public TreeNode(T data){
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
+
+	public TreeNode(T data){
         this.data = data;
     }
 
