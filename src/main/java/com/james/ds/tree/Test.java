@@ -44,5 +44,8 @@ public class Test {
 
         binaryTree.travPost(binaryTree.root());
         pln();
+
+        binaryTree.travLeve(binaryTree.root());
+        pln();
     }
 }
