@@ -1,5 +1,6 @@
 package com.james.ds.tree;
 
+import com.james.ds.list.Queue;
 import com.james.ds.list.Stack;
 
 import static com.james.ds.Utils.*;
@@ -47,10 +48,6 @@ public class BinaryTree{
         visit(node);
     }
 
-    /**
-     * 层次周游
-     */
-    public void travLeve(){}
 
     /**
      * 非递归前序周游
@@ -106,8 +103,6 @@ public class BinaryTree{
 
     /**
      * 沿着左侧链向下访问，收集右侧节点
-     * @param stack
-     * @param node
      */
     private void visitAlongLeft(Stack<TreeNode> stack, TreeNode node){
         while(node != null){
@@ -155,7 +150,7 @@ public class BinaryTree{
                 currNode = stack.popTop();
                 visit(currNode);
                 currNode = currNode.getRightChild();
-                if( currNode != null){//如果有左子树 将根节点压入栈中 访问左子树根节点
+                if( currNode != null){
                     stack.push(currNode);
                 }
                 continue;
@@ -171,8 +166,6 @@ public class BinaryTree{
 
     /**
      * 沿着左侧链向下寻找左侧节点 并入栈
-     * @param stack
-     * @param node
      */
     private void goAlongLeftBranch(Stack<TreeNode> stack, TreeNode node){
         while(node != null){
@@ -191,12 +184,14 @@ public class BinaryTree{
             currNode = node;
         }
         Stack<TreeNode> stack = new Stack<TreeNode>();
-        //根节点开始访问
-
+        //根节点开始访问依次访问各个节点
         do {
+            //保存当前节点的左侧链上节点， 直到访问左侧叶子节点
             goAlongLeftBranch(stack, currNode);
+            //弹出最后入栈的子节点 并访问
             currNode = stack.popTop();
             visit(currNode);
+            //获得当前节点右子树
             currNode = currNode.getRightChild();
         } while (currNode != null || !stack.isEmpty());
     }
@@ -205,7 +200,50 @@ public class BinaryTree{
      * 非递归后序周游
      */
     public void travPost(TreeNode node){
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode currNode = null;
+        if(node != null){
+            currNode = node;
+            stack.push(currNode);
+        }
+        //根节点开始访问
+        while (currNode != null || !stack.isEmpty()){
+            if(currNode == null) {
+                currNode = stack.popTop();
+                TreeNode rchild = currNode.getRightChild();
+                if( rchild != null){
+                    stack.push(rchild);
+                    currNode = rchild;
+                    continue;
+                }
+                visit(currNode);
+            }
+            TreeNode lchild = currNode.getLiftChild();
+            if( lchild != null){
+                stack.push(lchild);
+            }
+            currNode = lchild;
+        }
+    }
 
+
+    /**
+     * 层次周游
+     */
+    public void travLeve(TreeNode node){
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        if(node != null){
+            queue.enQueue(node);
+        }
+        TreeNode currNode = null;
+        while(!queue.isEmpty()){
+            currNode = queue.deQueue();
+            visit(currNode);
+            if(currNode.getLiftChild() != null)
+                queue.enQueue(currNode.getLiftChild());
+            if(currNode.getRightChild() != null)
+                queue.enQueue(currNode.getRightChild());
+        }
     }
 
     public void visit(TreeNode node){
