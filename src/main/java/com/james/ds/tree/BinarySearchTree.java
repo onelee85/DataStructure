@@ -2,11 +2,9 @@ package com.james.ds.tree;
 
 import java.util.Comparator;
 
-import com.james.ds.list.Stack;
-
 /**
  * 二叉搜索树
- * 
+ * 用于操作：动态搜索、添加、删除元素
  * 有节点K, 其左节点小于K，其右节点大于K， 且对于其子树也是一样
  */
 public class BinarySearchTree<T> {
@@ -133,8 +131,8 @@ public class BinarySearchTree<T> {
 				// 如果删除节点有左右子树，找到左子树的最大节点，或者右子树的最小节点替换删除节点
 			if (root.getLeftChild() != null && root.getRightChild() != null) {
 				tmpNode = findMax(root.getLeftChild());
-				root.setData(tmpNode.getData());
-				root.setLeftChild(delete(root.getLeftChild(), tmpNode.getData()));
+				root.setData(tmpNode.getData());//替换当前要删除节点
+				root.setLeftChild(delete(root.getLeftChild(), tmpNode.getData()));//删除之前替换的节点
 			} else if (root.getLeftChild() != null) {// 如果删除节点有左子树，将删除节的父节点指向左子树
 				root.setLeftChild(root.getLeftChild());
 			} else if (root.getRightChild() != null) {// 如果删除节点有右子树，将删除节的父节点指向右子树
