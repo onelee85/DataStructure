@@ -28,7 +28,7 @@ public class BinaryTree {
 		if (node == null)
 			return;
 		visit(node);
-		travRecurPre(node.getLiftChild());
+		travRecurPre(node.getLeftChild());
 		travRecurPre(node.getRightChild());
 	}
 
@@ -38,7 +38,7 @@ public class BinaryTree {
 	public void travRecurIn(TreeNode node) {
 		if (node == null)
 			return;
-		travRecurIn(node.getLiftChild());
+		travRecurIn(node.getLeftChild());
 		visit(node);
 		travRecurIn(node.getRightChild());
 	}
@@ -49,7 +49,7 @@ public class BinaryTree {
 	public void travRecurPost(TreeNode node) {
 		if (node == null)
 			return;
-		travRecurPost(node.getLiftChild());
+		travRecurPost(node.getLeftChild());
 		travRecurPost(node.getRightChild());
 		visit(node);
 	}
@@ -70,7 +70,7 @@ public class BinaryTree {
 				continue;
 			}
 			visit(currNode);
-			TreeNode lchild = currNode.getLiftChild();
+			TreeNode lchild = currNode.getLeftChild();
 			if (lchild != null) {// 如果有左子树 将根节点压入栈中 访问左子树根节点
 				stack.push(currNode);
 				currNode = lchild;
@@ -98,7 +98,7 @@ public class BinaryTree {
 			if (rchild != null) {// 如果有左子树 将根节点压入栈中 访问左子树根节点
 				stack.push(rchild);
 			}
-			TreeNode lchild = currNode.getLiftChild();
+			TreeNode lchild = currNode.getLeftChild();
 			if (lchild != null) {// 如果有左子树 将根节点压入栈中 访问左子树根节点
 				stack.push(lchild);
 			}
@@ -116,7 +116,7 @@ public class BinaryTree {
 			if (rchild != null) {// 如果有左子树 将根节点压入栈中 访问左子树根节点
 				stack.push(rchild);
 			}
-			node = node.getLiftChild();
+			node = node.getLeftChild();
 		}
 
 	}
@@ -158,7 +158,7 @@ public class BinaryTree {
 				}
 				continue;
 			}
-			TreeNode lchild = currNode.getLiftChild();
+			TreeNode lchild = currNode.getLeftChild();
 			if (lchild != null) {// 如果有左子树 将根节点压入栈中 访问左子树根节点
 				stack.push(lchild);
 			}
@@ -173,7 +173,7 @@ public class BinaryTree {
 	private void goAlongLeftBranch(Stack<TreeNode> stack, TreeNode node) {
 		while (node != null) {
 			stack.push(node);
-			node = node.getLiftChild();
+			node = node.getLeftChild();
 		}
 
 	}
@@ -213,7 +213,7 @@ public class BinaryTree {
 		// 根节点开始访问
 		while (currNode != null || !stack.isEmpty()) {
 			if (currNode != null && currNode.getTag() == null) {
-				TreeNode lchild = currNode.getLiftChild();
+				TreeNode lchild = currNode.getLeftChild();
 				if (lchild != null) {
 					currNode.setTag(Tag.Left);
 					stack.push(lchild);
@@ -250,8 +250,8 @@ public class BinaryTree {
 		while (!queue.isEmpty()) {
 			currNode = queue.deQueue();
 			visit(currNode);
-			if (currNode.getLiftChild() != null)
-				queue.enQueue(currNode.getLiftChild());
+			if (currNode.getLeftChild() != null)
+				queue.enQueue(currNode.getLeftChild());
 			if (currNode.getRightChild() != null)
 				queue.enQueue(currNode.getRightChild());
 		}
