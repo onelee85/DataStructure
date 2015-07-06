@@ -48,20 +48,21 @@ public class BinarySearchTree<T> {
 	}
 
 	public TreeNode<T> find(T value) {
-		if (root != null) {
-			TreeNode<T> currNode = root;
-			while (currNode != null) {
-				if (compare(currNode.getData(), value) < 0) { // 小于于当前节点左叶子树上
-					currNode = currNode.getRightChild();
-				} else if (compare(currNode.getData(), value) > 0) {
-					currNode = currNode.getLeftChild();
-				} else {
-					return currNode;
-				}
-			}
-		}
-		return null;
-	}
+        if (root != null) {
+            TreeNode<T> currNode = root;
+            while (currNode != null) {
+                int compare = compare(value, currNode.getData());
+                if (compare < 0) { // 小于于当前节点左叶子树上
+                    currNode = currNode.getLeftChild();
+                } else if (compare > 0) {
+                    currNode = currNode.getRightChild();
+                } else {
+                    return currNode;
+                }
+            }
+        }
+        return null;
+    }
 
 	public TreeNode<T> findMin() {
 		return findMin(this.root);
