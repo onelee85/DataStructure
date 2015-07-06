@@ -1,35 +1,54 @@
 package com.james.ds.tree;
 
+import java.util.Comparator;
+
 /**
  * 二叉树树节点
  */
 public class TreeNode<T> {
-    private T data;
-    private TreeNode<T> liftChild;
-    private TreeNode<T> rightChild;
+	enum Tag {
+		Left, Right;
+	}
 
-    public TreeNode(T data){
-        this.data = data;
-    }
+	private T data;
+	private TreeNode<T> leftChild;
+	private TreeNode<T> rightChild;
+	private Tag tag;
 
-    public TreeNode<T> getLiftChild(){
-        return  this.liftChild;
-    }
+	public Tag getTag() {
+		return tag;
+	}
 
-    public TreeNode<T> getRightChild(){
-        return  this.rightChild;
-    }
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
 
-    public void setLiftChild(TreeNode<T> liftChild){
-        this.liftChild = liftChild;
-    }
+	public TreeNode(T data) {
+		this.data = data;
+	}
 
-    public void setRightChild(TreeNode<T> rightChild){
-        this.rightChild = rightChild;
-    }
+	public TreeNode<T> getLeftChild() {
+		return this.leftChild;
+	}
 
-    public T getData(){
-        return this.data;
-    }
+	public TreeNode<T> getRightChild() {
+		return this.rightChild;
+	}
+
+	public void setLeftChild(TreeNode<T> leftChild) {
+		this.leftChild = leftChild;
+	}
+
+	public void setRightChild(TreeNode<T> rightChild) {
+		this.rightChild = rightChild;
+	}
+
+	public T getData() {
+		return this.data;
+	}
+
+	public void setData(T data) {
+		this.data = data;
+	}
 
 }
