@@ -25,6 +25,6 @@ public class Test {
         g.printGraphLink();
         pln();
 
-        g.DFS(1);
+        g.DFS_V1(1);
 	}
 }
