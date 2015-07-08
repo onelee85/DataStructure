@@ -25,6 +25,11 @@ public class Test {
         g.printGraphLink();
         pln();
 
+        g.DFS(1);
+        pln();
         g.DFS_V1(1);
+
+        pln();
+        g.BFS(1);
 	}
 }

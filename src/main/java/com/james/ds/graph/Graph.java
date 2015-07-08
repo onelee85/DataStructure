@@ -6,6 +6,7 @@ import static com.james.ds.Utils.pn;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.james.ds.list.Queue;
 import com.james.ds.list.Stack;
 
 /**
@@ -122,31 +123,29 @@ public class Graph {
 		}
 	}
 
+    // 找到起点
+    List<Integer> visited = new ArrayList<Integer>(nums);
 	/**
 	 * 深度优先 邻接表 O(N + E) 邻接矩阵 O(N^2)
 	 */
-	public void DFS(int start_num) {
-		// 找到起点
-		List<Integer> visited = new ArrayList<Integer>(nums);
+	public void DFS(Integer start_num) {
 		Node v_node = findGraphLink(start_num);
-		Stack<Node> stack = new Stack<Node>();
-		stack.push(v_node);
-		while (v_node != null || !stack.isEmpty()) {
-			if (v_node != null) {
-				v_node = findGraphLink(v_node.data);
-				visit(v_node);
-				visited.add(v_node.data);
-				Node next_node = v_node.next;
-				while (next_node != null && visited.contains(next_node.data)) {
-					next_node = next_node.next;
-				}
-				v_node = next_node;
-			}
-			if (v_node != null)
-				stack.push(v_node);
-			else
-				v_node = stack.popTop();
-		}
+        if(v_node == null){
+            return;
+        }
+        //访问节点
+        visit(v_node);
+        //标记已访问
+        visited.add(v_node.data);
+        //访问他每个领接点
+        Node node_next = v_node.next;
+        while(node_next != null){
+            //未访问的领接点继续遍历
+            if(!visited.contains(node_next.data)){
+                DFS(node_next.data);
+            }
+            node_next = node_next.next;
+        }
 	}
 
 	public void DFS_V1(int start_num) {
@@ -175,9 +174,27 @@ public class Graph {
 	/**
 	 * 广度优先 邻接表 O(N + E) 邻接矩阵 O(N^2)
 	 */
-	public void BFS() {
-
-	}
+	public void BFS(int start_num) {
+        List<Integer> visited = new ArrayList<Integer>(nums);
+        Queue<Node> queue = new Queue<Node>();
+        Node v_node = findGraphLink(start_num);
+        visited.add(v_node.data);
+        queue.enQueue(v_node);
+        while (!queue.isEmpty()) {
+            v_node = queue.deQueue();
+            visit(v_node);
+            //访问他每个领接点
+            Node node_next = v_node.next;
+            while (node_next != null) {
+                //未访问过的领接点入队
+                if (!visited.contains(node_next.data)) {
+                    visited.add(node_next.data); //标记将被访问
+                    queue.enQueue(findGraphLink(node_next.data));//入准备访问队列
+                }
+                node_next = node_next.next;
+            }
+        }
+    }
 
 	private void visit(Node node) {
 		pn(node.data + " ");
