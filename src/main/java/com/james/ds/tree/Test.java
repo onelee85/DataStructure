@@ -66,5 +66,14 @@ public class Test {
 		bst.delete(88);
 		binaryTree.travIn(bst.root());
 		pln();
+
+        pln("++++++++++++++++++AVL平衡搜索树++++++++++++++++++");
+        AVLTree<Integer> avlTree = new AVLTree<Integer>();
+        for (int i = 0; i < arrs.length; i++) {
+            TreeNode<Integer> node = new TreeNode<Integer>(arrs[i]);
+            avlTree.insert(node);
+        }
+        binaryTree.travIn(avlTree.root());
+        pln();
 	}
 }
