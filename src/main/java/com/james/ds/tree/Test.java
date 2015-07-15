@@ -75,5 +75,33 @@ public class Test {
         }
         binaryTree.travIn(avlTree.root());
         pln();
+
+
+        pln("++++++++++++++++++堆++++++++++++++++++");
+        Heap<Integer> heap = new Heap<Integer>(10);
+        heap.insert(5);
+        heap.insert(6);
+        heap.insert(4);
+        heap.insert(3);
+        heap.insert(2);
+        heap.insert(1);
+        heap.print();
+        pln();
+        heap.insert(15);
+        heap.print();
+        pln();
+        heap.insert(16);
+        heap.print();
+        pln();
+        pln("getMax:"+heap.getMax());
+        heap.delMax();//16
+        heap.delMax();//15
+        heap.delMax();//6
+        heap.delMax();//5
+        heap.delMax();//4
+        heap.delMax();//3
+        pln("getMax after delMax :"+heap.getMax());
+        heap.print();
+        pln();
 	}
 }
