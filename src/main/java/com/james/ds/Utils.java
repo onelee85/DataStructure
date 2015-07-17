@@ -20,7 +20,11 @@ public class Utils {
     public static void pn(Object content){
         System.out.print(content);
     }
-
+    public static void plns(Object[] objs){
+        for (Object obj : objs){
+            System.out.print(obj + "\t");
+        }
+    }
     public static Boolean isDigit(char c){
         return p.matcher(String.valueOf(c)).matches();
     }

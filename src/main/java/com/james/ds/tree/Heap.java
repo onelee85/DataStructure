@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
+import static com.james.ds.Utils.pln;
 import static com.james.ds.Utils.pn;
 
 /**
@@ -68,15 +69,17 @@ public class Heap<T> {
     public void insert(T node) {
         elementData[elementCount++] = node;
         T parent = getParent(node);
+        T max = node;
         while (parent != null) {
             if (comparator.compare(node, parent) > 0) {
-                swap(parent, node);
-                parent = getParent(node);
+                max = parent;
+                parent = getParent(parent);
             }else{
-                return;
+                break;
             }
-
         }
+        if(!node.equals(max))
+            swap(max, node);
     }
 
     /**
@@ -87,7 +90,9 @@ public class Heap<T> {
     public T getParent(T node){
         int index = indexOf(node);
         int parent = 0;
-        if(index >= 1){
+        if(index == 0){
+            return null;
+        }else if(index >= 1){
             parent = (index+1)/2 - 1;
         }
         return (T)elementData[parent];
@@ -105,6 +110,7 @@ public class Heap<T> {
             if(item != null)
                 pn((T)item+"\t");
         }
+        pln();
     }
 
     public synchronized int indexOf(Object o) {

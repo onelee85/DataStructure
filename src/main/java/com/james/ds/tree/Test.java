@@ -86,18 +86,19 @@ public class Test {
         heap.insert(2);
         heap.insert(1);
         heap.print();
-        pln();
         heap.insert(15);
         heap.print();
-        pln();
         heap.insert(16);
         heap.print();
-        pln();
         pln("getMax:"+heap.getMax());
         heap.delMax();//16
+        heap.print();
         heap.delMax();//15
+        heap.print();
         heap.delMax();//6
+        heap.print();
         heap.delMax();//5
+        heap.print();
         heap.delMax();//4
         heap.delMax();//3
         pln("getMax after delMax :"+heap.getMax());
