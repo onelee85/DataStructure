@@ -48,6 +48,25 @@ public class Link<T> implements List<T>{
         return null;
     }
 
+
+    /**
+     * 反转链表
+     */
+    public void reverse(){
+        LinkedNode<T> curr = head.next();
+        LinkedNode<T> pre = null;
+        tail.pointNext(head);
+        while (curr != null){
+            head.pointNext(curr);
+            LinkedNode<T> next = curr.next();
+            curr.pointNext(pre);
+            if(pre != null)
+                pre.pointPre(curr);
+            pre = curr;
+            curr = next;
+        }
+    }
+
     public void printList(){
         LinkedNode<T> curr = head;
         while (curr.hasNext()){

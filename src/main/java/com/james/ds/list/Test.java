@@ -1,13 +1,21 @@
 package com.james.ds.list;
 
 
+import static com.james.ds.Utils.pln;
+
 public class Test {
 
     public static void main(String[] args) {
-        List<Integer> linklist = new Link<Integer>();
+        Link<Integer> linklist = new Link<Integer>();
         linklist.add(1);
         linklist.add(2);
         linklist.add(3);
+        linklist.add(4);
+        linklist.add(5);
+        linklist.printList();
+        System.out.println();
+        pln("reverse link");
+        linklist.reverse();
         linklist.printList();
         System.out.println();
         System.out.println("find data :" + linklist.find(2));
