@@ -12,6 +12,9 @@ public class BinarySearch {
         return binarySearchV1(arrs, val, 0, arrs.length-1);
     }
 
+    /**
+     * 递归
+     */
     private Integer binarySearch(Integer[] arrs, Integer val, Integer lo, Integer hi) {
         if(lo > hi) return -1;
         Integer mid = (hi + lo) / 2;
@@ -20,6 +23,9 @@ public class BinarySearch {
         return mid;
     }
 
+    /**
+     * 非递归
+     */
     private Integer binarySearchV1(Integer[] arrs, Integer val, Integer lo, Integer hi) {
         while(hi >= lo){
             Integer mid = (hi + lo) / 2;

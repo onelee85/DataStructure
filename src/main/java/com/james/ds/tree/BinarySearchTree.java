@@ -145,4 +145,43 @@ public class BinarySearchTree<T> {
 		}
 		return root;
 	}
+
+    /**
+     * 验证后序遍历序列是否为搜索树
+     */
+    public static Boolean verifySquenceOfBST(Integer[] seq, int begin, int end) {
+
+        if (seq == null || seq.length == 0) return Boolean.FALSE;
+
+        //后序遍历末节点为树根
+        Integer root = seq[end];
+
+        //从起点遍历比根小的序列为左子树
+        int i = begin;
+        for (; i < end; i++) {
+            if (seq[i] > root)
+                break;
+        }
+        //检查之后的节点必定比根节点大
+        int j = i;
+        for (; j < end; j++) {
+            if (seq[j] < root)
+                break;
+        }
+        //如果右子树存在比根节点大的节点则不是搜索树
+        if(j < end){
+            return Boolean.FALSE;
+        }
+        //i到开始节点之前超过2个节点，则判断左子树是否为搜索树
+        Boolean left = Boolean.TRUE;
+        if(i - begin > 1)
+            left = verifySquenceOfBST(seq, begin, i - 1);
+        //如果i到j之间超过2个节点，则判断右子树是否为搜索树
+        Boolean right = Boolean.TRUE;
+        if(j - i > 1)
+            right = verifySquenceOfBST(seq, j, end - 1);
+
+        return left && right;
+    }
 }
+

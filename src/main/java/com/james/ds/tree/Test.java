@@ -67,6 +67,10 @@ public class Test {
 		binaryTree.travIn(bst.root());
 		pln();
 
+        Integer[] seqs = {5,7,6,9,11,10,8};
+        Integer[] seqs2 = {7,4,6,5};
+        pln("判断是否搜索树："+ BinarySearchTree.verifySquenceOfBST(seqs, 0, seqs.length-1));
+
         pln("++++++++++++++++++AVL平衡搜索树++++++++++++++++++");
         AVLTree<Integer> avlTree = new AVLTree<Integer>();
         for (int i = 0; i < arrs.length; i++) {

@@ -9,16 +9,31 @@ public class Test {
         Link<Integer> linklist = new Link<Integer>();
         linklist.add(1);
         linklist.add(2);
-        linklist.add(3);
-        linklist.add(4);
         linklist.add(5);
+        linklist.add(6);
+        linklist.add(9);
         linklist.printList();
-        System.out.println();
+        Link<Integer> linklist2 = new Link<Integer>();
+        linklist2.add(3);
+        linklist2.add(4);
+        linklist2.add(7);
+        linklist2.add(8);
+        linklist2.add(10);
+        linklist2.printList();
+
         pln("reverse link");
         linklist.reverse();
         linklist.printList();
-        System.out.println();
-        System.out.println("find data :" + linklist.find(2));
+
+        pln("reverse link");
+        linklist.reverseV2();
+        linklist.printList();
+
+        pln("merge sorted link1 to link2");
+        Link<Integer> linklist3 = linklist.mergeSortLink(linklist, linklist2);
+        //Link<Integer> linklist3 = linklist.mergeSortLinkV2(linklist, linklist2);
+        linklist3.printList();
+        pln("find data :" + linklist.find(2));
         linklist.remove(2);
         linklist.printList();
 
