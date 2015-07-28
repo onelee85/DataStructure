@@ -140,7 +140,7 @@ public class BinaryTree {
 	/**
 	 * 非递归中序周游
 	 */
-	public void travIn(TreeNode node) {
+	public static void travIn(TreeNode node) {
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		TreeNode currNode = null;
 		if (node != null) {
@@ -257,7 +257,7 @@ public class BinaryTree {
 		}
 	}
 
-	public void visit(TreeNode node) {
+	public static void visit(TreeNode node) {
 		pn(node.getData() + " ");
 	}
 }
