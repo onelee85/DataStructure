@@ -24,6 +24,7 @@ public class Utils {
         for (Object obj : objs){
             System.out.print(obj + "\t");
         }
+        System.out.println();
     }
     public static Boolean isDigit(char c){
         return p.matcher(String.valueOf(c)).matches();
