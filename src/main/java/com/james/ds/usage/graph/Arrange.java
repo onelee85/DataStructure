@@ -10,7 +10,7 @@ import static com.james.ds.Utils.pn;
 public class Arrange {
 
     /**
-     * 穷举法
+     * 穷举法 1，2，3 的全排列
      * @param seqs
      */
     static void exhaustion(Integer[] seqs) {
