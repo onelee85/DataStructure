@@ -9,6 +9,7 @@ import static com.james.ds.Utils.plns;
 public class BinarySearch {
 
     public Integer search(Integer[] arrs, Integer val){
+
         return binarySearchV1(arrs, val, 0, arrs.length-1);
     }
 
@@ -17,6 +18,7 @@ public class BinarySearch {
      */
     private Integer binarySearch(Integer[] arrs, Integer val, Integer lo, Integer hi) {
         if(lo > hi) return -1;
+        //Integer mid = (hi + lo) / 2;
         Integer mid = (hi + lo) / 2;
         if (val > arrs[mid]) return binarySearch(arrs, val, mid + 1, hi);
         else if (val < arrs[mid]) return binarySearch(arrs, val, lo, mid - 1);
@@ -28,7 +30,8 @@ public class BinarySearch {
      */
     private Integer binarySearchV1(Integer[] arrs, Integer val, Integer lo, Integer hi) {
         while(hi >= lo){
-            Integer mid = (hi + lo) / 2;
+            //Integer mid = (hi + lo) / 2;
+            Integer mid = ((hi - lo) >> 2) + lo;
             if (val > arrs[mid]) lo = mid + 1;
             else if (val < arrs[mid]) hi = mid - 1;
             else return mid;

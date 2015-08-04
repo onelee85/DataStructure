@@ -14,8 +14,7 @@ public class Link<T> implements List<T>{
     private LinkedNode<T> head = new LinkedNode<T>();
     private LinkedNode<T> tail = new LinkedNode<T>();
 
-    public void add(T t){
-        LinkedNode<T> node = new LinkedNode<T>(t);
+    public void add(LinkedNode<T> node){
         if(!head.hasNext()){
             head.pointNext(node);
             node.pointPre(head);
@@ -26,6 +25,11 @@ public class Link<T> implements List<T>{
         tailNode.pointNext(node);
         node.pointPre(tailNode);
         tail.pointNext(node);
+    }
+
+    public void add(T t){
+        LinkedNode<T> node = new LinkedNode<T>(t);
+        add(node);
     }
 
     public Boolean remove(T t){
@@ -148,6 +152,20 @@ public class Link<T> implements List<T>{
             mergeHead.pointNext(mergeSort(head1, head2.next()));
         }
         return mergeHead;
+    }
+
+    public LinkedNode<T> getHead(){
+        return this.head;
+    }
+
+    public Integer size(){
+        LinkedNode<T> curr = head;
+        Integer length = 0;
+        while (curr.hasNext()){
+            curr = curr.next();
+            length++;
+        }
+        return length;
     }
 
     public void printList(){
