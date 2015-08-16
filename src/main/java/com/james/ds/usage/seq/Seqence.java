@@ -44,12 +44,38 @@ public class Seqence {
         plns(subMaxSeqs.toArray());
     }
 
+    private static void findMaxSumOfSubSeqV1(Integer[] arrs ){
+        Integer currSum = 0;
+        Integer maxSum = 0;
+        List<Integer> subSeqs = new ArrayList<Integer>();
+        List<Integer> subMaxSeqs = new ArrayList<Integer>();
+        for (Integer num : arrs){
+            currSum += num;
+            subSeqs.add(num);
+            if(currSum > maxSum) {
+                maxSum = currSum;
+                subMaxSeqs.clear();
+                subMaxSeqs.addAll(subSeqs);
+            }
+            //当累加到当前数字的和小于0 则重新开始累加
+            else if(currSum < 0){
+                currSum = 0;
+                subSeqs.clear();
+            }
+        }
+        pln("max sum : " + maxSum);
+        plns(subMaxSeqs.toArray());
+    }
+    
     public static void main(String[] args) {
         Integer[] arrs = {1, -2, 3, 10, -4, 7, 2, -5};
         Integer[] arrs1 = {1, -2, 3, 10, -4, -7, -2, -5};
         Integer[] arrs2 = {11, -2, 3, 10, -4, 7, -2, -5};
         findMaxSumOfSubSeq(arrs);
+        findMaxSumOfSubSeqV1(arrs);
         findMaxSumOfSubSeq(arrs1);
+        findMaxSumOfSubSeqV1(arrs1);
         findMaxSumOfSubSeq(arrs2);
+        findMaxSumOfSubSeqV1(arrs2);
     }
 }
