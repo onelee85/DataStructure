@@ -19,7 +19,7 @@ public class Seqence {
      * 当累加的和比最大子数组和小时， 保存子数组（可能为最大子数组）
      * O（n）
      */
-    private static void findMaxSumOfSubSeq(Integer[] arrs ){
+    public static void findMaxSumOfSubSeq(Integer[] arrs ){
         Integer currSum = 0;
         Integer maxSum = 0;
         List<Integer> subSeqs = new ArrayList<Integer>();
@@ -44,6 +44,44 @@ public class Seqence {
         plns(subMaxSeqs.toArray());
     }
 
+    /**
+     * 统计一个数字K在一组已排序数组中出现的次数
+     * 考察2分查找的灵活应用
+     * 先找到这个数第一次出现的位置 如果比较后 比较大则只可能出现在数组后半段， 小的话则只可能出现在前半段
+     * 再找到这个数最后出现的位置
+     */
+    public static Integer findNumberOfK(Integer[] arrs, Integer k){
+        int lo = 0;
+        int hi = arrs.length - 1;
+        int num = 0;
+        int mid = -1;
+        while (hi >= lo){
+            mid = ((hi - lo) >> 2) + lo;
+            if(k > arrs[mid]) lo = mid + 1;
+            else if(k < arrs[mid]) hi = mid - 1;
+            else{
+                num++;
+                break;
+            }
+        }
+
+        if(mid > -1){
+            Integer first = mid - 1;
+            Integer end  = mid + 1;
+            while(first >= 0){
+                if(arrs[first--].equals(k)){
+                    num++;
+                }
+            }
+            while(end < arrs.length){
+                if(arrs[end++].equals(k)){
+                    num++;
+                }
+            }
+        }
+        return num;
+    }
+
     public static void main(String[] args) {
         Integer[] arrs = {1, -2, 3, 10, -4, 7, 2, -5};
         Integer[] arrs1 = {1, -2, 3, 10, -4, -7, -2, -5};
@@ -51,5 +89,8 @@ public class Seqence {
         findMaxSumOfSubSeq(arrs);
         findMaxSumOfSubSeq(arrs1);
         findMaxSumOfSubSeq(arrs2);
+
+        Integer[] sort_arrs = {1, 2, 3, 4, 11, 25, 25, 25, 29, 29, 29};
+        pln("Number Of K : " + findNumberOfK(sort_arrs, 25));
     }
 }
