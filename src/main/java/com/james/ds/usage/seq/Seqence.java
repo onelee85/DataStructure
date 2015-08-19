@@ -108,18 +108,94 @@ public class Seqence {
         return num;
     }
 
+    /**
+     * 输入一个整数n 求从1到n个整数十进制表示中1(countNum)出现的次数  例如12，从1到12中包含1的有1,10,11和12 一共5次
+     * @param n
+     * @return
+     */
+    public static Integer findNumOfBetween1AndN(Integer n, Integer countNum){
+        Integer total_count = 0;
+        for (int i = 1; i<= n; i++){
+            int num = i;
+            int count = 0;
+            while (num > 0){
+                if(num % 10 == countNum)
+                    count++;
+                num = num / 10;
+            }
+            total_count += count;
+        }
+        return total_count;
+    }
+
+    /**
+     * 寻找丑数
+     * @param index_count
+     * @return
+     */
+    public static Integer findUglyNumberCount(Integer index_count){
+        Integer[] ugly_arrs = new Integer[index_count];
+        int found_count = 0;
+        int index = 0;
+        int number = 0;
+        while (found_count < index_count){
+            if(isUgly(++number)){
+                found_count++;
+                ugly_arrs[index++] = number;
+            }
+        }
+        plns(ugly_arrs);
+        return found_count;
+    }
+
+    private static Boolean isUgly(int num){
+        while (num % 2 == 0) num /= 2;
+        while (num % 3 == 0) num /= 3;
+        while (num % 5 == 0) num /= 5;
+        return num == 1;
+    }
+    /**
+     * 寻找丑数个数， 只包含因子2、3和5的数称为丑数（6,8是丑数） 所谓一个数m是另一个数n的因子 是指n能被m整除
+     *
+     * 丑数一定是之前丑数乘以2、3或者5的结果
+     * 找到之前丑数相乘以后大之前的第一最小个数， 保持丑数数组的从小到大的顺序
+     */
+    public static Integer findUglyNumberCountV2(Integer index){
+        Integer[] ugly_arrs = new Integer[index];
+        ugly_arrs[0] = 1;
+        Integer m2 = 0;
+        Integer m3 = 0;
+        Integer m5 = 0;
+        int curr_index = 1;
+        while (curr_index < index){
+            Integer min = min(ugly_arrs[m2] * 2, ugly_arrs[m3] * 3, ugly_arrs[m5] * 5);
+            ugly_arrs[curr_index] = min;
+            while (ugly_arrs[m2] * 2 <= ugly_arrs[curr_index]) ++m2;
+            while (ugly_arrs[m3] * 3 <= ugly_arrs[curr_index]) ++m3;
+            while (ugly_arrs[m5] * 5 <= ugly_arrs[curr_index]) ++m5;
+            ++curr_index;
+        }
+        plns(ugly_arrs);
+        return curr_index;
+    }
+
+    private static Integer min(Integer n1, Integer n2, Integer n3){
+        int min = n1 < n2 ? n1 : n2;
+        min = min < n3 ? min : n3;
+        return min;
+    }
+
     public static void main(String[] args) {
         Integer[] arrs = {1, -2, 3, 10, -4, 7, 2, -5};
-        Integer[] arrs1 = {1, -2, 3, 10, -4, -7, -2, -5};
-        Integer[] arrs2 = {11, -2, 3, 10, -4, 7, -2, -5};
         findMaxSumOfSubSeq(arrs);
         findMaxSumOfSubSeqV1(arrs);
-        findMaxSumOfSubSeq(arrs1);
-        findMaxSumOfSubSeqV1(arrs1);
-        findMaxSumOfSubSeq(arrs2);
-        findMaxSumOfSubSeqV1(arrs2);
 
         Integer[] sort_arrs = {1, 2, 3, 4, 11, 25, 25, 25, 29, 29, 29};
         pln("Number Of K : " + findNumberOfK(sort_arrs, 25));
+
+        pln("1 is appear count : " + findNumOfBetween1AndN(12, 1));
+
+        pln("find ugly count : " + findUglyNumberCount(15));
+        pln("find ugly count V2 : " + findUglyNumberCountV2(15));
     }
 }
