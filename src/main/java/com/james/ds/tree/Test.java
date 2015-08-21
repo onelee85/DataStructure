@@ -49,6 +49,8 @@ public class Test {
 		binaryTree.travLeve(binaryTree.root());
 		pln();
 
+        pln("the deep of tree :" + BinaryTree.deep(binaryTree.root()));
+
 		pln("++++++++++++++++++二叉搜索树++++++++++++++++++");
 		Integer[] arrs = { 53, 60, 18, 21, 22, 82, 74, 79, 12, 88 };
 		BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>();

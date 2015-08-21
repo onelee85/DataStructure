@@ -3,6 +3,7 @@ package com.james.ds.tree;
 import com.james.ds.list.Queue;
 import com.james.ds.list.Stack;
 import com.james.ds.tree.TreeNode.Tag;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
 import static com.james.ds.Utils.*;
 
@@ -256,6 +257,34 @@ public class BinaryTree {
 				queue.enQueue(currNode.getRightChild());
 		}
 	}
+
+    /**
+     * 二叉树的深度
+     * 当前节点的深度 为其左右子树中最大的深度+1
+     * @return
+     */
+    public static Integer deep(TreeNode node){
+        if(node == null) return 0;
+        Integer rdeep = deep(node.getRightChild());
+        Integer ldeep = deep(node.getLeftChild());
+        Integer deep = Math.max(rdeep, ldeep);
+        return deep + 1;
+    }
+
+    /**
+     * 判断是否为平衡二叉树
+     * //每个节点左右子树差的绝对值不超过1的为平衡二叉树
+     * @param node
+     * @return
+     */
+    public static Boolean IsBalanced(TreeNode node){
+        if(node == null) return Boolean.TRUE;
+        Integer rdeep = deep(node.getRightChild());
+        Integer ldeep = deep(node.getLeftChild());
+        Integer deep = Math.abs(rdeep - ldeep);
+        if(deep > 1) return Boolean.FALSE;
+        return IsBalanced(node.getRightChild()) && IsBalanced(node.getLeftChild());
+    }
 
 	public static void visit(TreeNode node) {
 		pn(node.getData() + " ");
