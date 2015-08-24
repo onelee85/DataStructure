@@ -5,6 +5,7 @@ import java.util.List;
 
 import static com.james.ds.Utils.pln;
 import static com.james.ds.Utils.plns;
+import static com.james.ds.Utils.pn;
 
 /**
  * 序列相关算法
@@ -185,6 +186,87 @@ public class Seqence {
         return min;
     }
 
+    /**
+     * 数组中只出现过一次的数字
+     * 一个数组内，除了两个数字外，其他数字都出现了2次
+     * 如果只有一个：通过异或计算遍历数组，最终结果刚好是出现一次的数字,因为相同数字异或等于0
+     * @param arrs
+     * @return
+     */
+    public static List<Integer> findNumsAppearOnce(Integer[] arrs){
+        List<Integer> onces = new ArrayList<Integer>();
+        //TODO
+        return onces;
+    }
+
+    /**
+     * 输入一个递增排序的数组和一个数字s 在数组中查找两个数使得他们的和正好是s
+     * 解法：
+     * 两个指针，分别指向排序数组的头和尾
+     * 如果当前相加之和大于数字s，则向后移动尾指针，小于则向前移动头指针
+     * 1, 2, 3, 4, 11, 25, 25, 25, 29, 29, 29
+     * ↑                                   ↑
+     *
+     * @return
+     */
+    public static Boolean findNumWithSumInSortArr(Integer[] sortArrs, Integer sum){
+        Integer head = 0;
+        Integer tail = sortArrs.length - 1;
+        while (head < tail){
+           Integer currSum = sortArrs[head] + sortArrs[tail];
+           if(currSum.equals(sum)){
+               return Boolean.TRUE;
+           }
+           if(currSum > sum)
+               tail--;
+            else{
+               head++;
+           }
+        }
+        return Boolean.FALSE;
+    }
+
+    /**
+     * 输入一个正数s， 打印出所有和为s的连续正数列(至少含有2个数)
+     * 如：输入15  1+2+3+4+5 = 4+5+6 = 7+8
+     * 所以打印出3个连续序列
+     * 解法：
+     * 选择2个指针，small 和big 分别初始化为1,2
+     * 如果 当前序列之和 小于正数s 则big增加1  如果大于正数s 则增加small 等于则打印序列并增加big
+     * small和big 由于至少含有2个数，故最终都不得大于 (s+1)/2
+     * @param sum
+     */
+    public static void findContinuousSeq(Integer sum){
+        if(sum < 3) return;
+        Integer small = 1;
+        Integer big = 2;
+        Integer currSum = small + big;
+        Integer mid = (Integer)(sum + 1)/2;
+        while (small < mid){
+            if(currSum.equals(sum)){
+                printSeq(small, big);
+            }
+            //移动small指针 在前一个序列基础上找操作之和的序列和
+            while (currSum > sum && small < mid){
+                currSum -= small; //去除一位最小的
+                small++;
+                if(currSum.equals(sum)){
+                    printSeq(small, big);
+                }
+            }
+            big++;
+            currSum += big;
+        }
+    }
+
+    //打印序列
+    private static void printSeq(Integer small, Integer big){
+        for (int i = small; i <= big; i++) {
+            pn(i + " ");
+        }
+        pln();
+    }
+
     public static void main(String[] args) {
         Integer[] arrs = {1, -2, 3, 10, -4, 7, 2, -5};
         findMaxSumOfSubSeq(arrs);
@@ -197,5 +279,10 @@ public class Seqence {
 
         pln("find ugly count : " + findUglyNumberCount(15));
         pln("find ugly count V2 : " + findUglyNumberCountV2(15));
+
+        pln("find num with sum  : " + findNumWithSumInSortArr(sort_arrs, 36));
+
+        pln("findContinuousSeq  : ");
+        findContinuousSeq(15);
     }
 }
