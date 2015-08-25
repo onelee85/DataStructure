@@ -267,6 +267,33 @@ public class Seqence {
         pln();
     }
 
+    /**
+     * 斐波那契数列  递归版
+     */
+    public static int Fibonacci(int n) {
+        if(n == 0) return 0;
+        if(n <= 2) return 1;
+        return Fibonacci(n - 2) + Fibonacci(n - 1);
+    }
+
+    /**
+     * 斐波那契数列
+     */
+    public static int FibonacciV1(int n) {
+        if(n == 0) return 0;
+        if(n <= 2) return 1;
+        int pre1 = 1;
+        int pre2 = 1;
+        int num = 2;
+        int curr = pre2 +pre1;
+        while (++num <= n){
+            curr = pre2 +pre1;
+            pre1 = pre2;
+            pre2 = curr;
+        }
+        return curr;
+    }
+
     public static void main(String[] args) {
         Integer[] arrs = {1, -2, 3, 10, -4, 7, 2, -5};
         findMaxSumOfSubSeq(arrs);
@@ -284,5 +311,14 @@ public class Seqence {
 
         pln("findContinuousSeq  : ");
         findContinuousSeq(15);
+
+        Integer numOfFibonacci = 45;
+        long begin = System.currentTimeMillis();
+        pln("Fibonacci  : " + Fibonacci(numOfFibonacci));
+        pln("Fibonacci cost time  : " + (System.currentTimeMillis() - begin));
+
+        begin = System.currentTimeMillis();
+        pln("Fibonacci v1 : " + FibonacciV1(numOfFibonacci));
+        pln("Fibonacci V1 cost time  : " + (System.currentTimeMillis() - begin));
     }
 }

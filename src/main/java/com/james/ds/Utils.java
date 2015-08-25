@@ -26,6 +26,7 @@ public class Utils {
         }
         System.out.println();
     }
+
     public static Boolean isDigit(char c){
         return p.matcher(String.valueOf(c)).matches();
     }
