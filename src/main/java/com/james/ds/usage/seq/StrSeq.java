@@ -50,9 +50,36 @@ public class StrSeq {
     /**
      * 请实现一个函数，将一个字符串中的空格替换成“%20”。
      * 例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
+     * 解：
+     * 先计算出来字符串空格的数量
+     * 计算出替换为%20的新字符串的长度,计算出需要替换的空间
+     * "We Are Happy     "
+     *             ↑    ↑
+     *             p1   p2
+     * 复制p1指向的字符 移动p1,p2  遇到空格插入%20 3个字符
      */
     public static String replaceSpace(StringBuffer str) {
-        return "";
+        if(str == null || str.length() == 0) return "";
+        int numOfBlank = 0;
+        int oriLength = str.length();
+        for (int i = 0; i < oriLength; i++) {
+            if(str.charAt(i) == ' ') numOfBlank++;
+        }
+        if(numOfBlank == 0) return str.toString();
+        int newLength = str.length() + numOfBlank * 2;
+        str.setLength(newLength);
+        int endIndex = newLength - 1;
+        for (int i = oriLength - 1; i >= 0; i--) {
+            char c = str.charAt(i);
+            if(c == ' ') {
+                str.setCharAt(endIndex--, '0');
+                str.setCharAt(endIndex--, '2');
+                str.setCharAt(endIndex--, '%');
+            }else{
+                str.setCharAt(endIndex--, c);
+            }
+        }
+        return str.toString();
     }
 
 
