@@ -3,7 +3,10 @@ package com.james.ds.usage.seq;
 import com.james.ds.list.Link;
 import com.james.ds.list.LinkedNode;
 
+import java.util.ArrayList;
+
 import static com.james.ds.Utils.pln;
+import static com.james.ds.Utils.plns;
 
 /**
  * 链表类算法问题
@@ -40,6 +43,30 @@ public class LinkedList {
     }
 
 
+
+
+    /**
+     * 输入一个链表，从尾到头打印链表每个节点的值。
+     * @param listNode
+     * @return
+     */
+    public static ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        ArrayList<Integer> stacks  = new ArrayList<Integer>();
+        ArrayList<Integer> list  = new ArrayList<Integer>();
+
+        while (listNode != null){
+            stacks.add(listNode.val);
+            listNode = listNode.next;
+        }
+        if(stacks.size() > 0){
+            for (int i = stacks.size() -1 ; i >= 0 ; i--) {
+                list.add(stacks.get(i));
+            }
+        }
+
+        return list;
+    }
+
     public static void main(String[] args) {
         LinkedNode<Integer> node1 = new LinkedNode<Integer>(1);
         LinkedNode<Integer> node2 = new LinkedNode<Integer>(2);
@@ -65,5 +92,24 @@ public class LinkedList {
         linklist2.add(node8);
         linklist2.printList();
         pln(findCommonNode(linklist, linklist2).getData());
+
+        ListNode n1 = new ListNode(1);
+        ListNode n2 = new ListNode(2);
+        ListNode n3 = new ListNode(3);
+        ListNode n4 = new ListNode(4);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        pln("printListFromTailToHead :");
+        plns(printListFromTailToHead(n1));
+    }
+}
+
+class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
     }
 }

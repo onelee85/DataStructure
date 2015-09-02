@@ -1,5 +1,6 @@
 package com.james.ds;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -21,6 +22,13 @@ public class Utils {
         System.out.print(content);
     }
     public static void plns(Object[] objs){
+        for (Object obj : objs){
+            System.out.print(obj + "\t");
+        }
+        System.out.println();
+    }
+
+    public static void plns(List objs){
         for (Object obj : objs){
             System.out.print(obj + "\t");
         }
