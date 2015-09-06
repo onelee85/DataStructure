@@ -5,8 +5,7 @@ import java.util.Arrays;
 import static com.james.ds.Utils.*;
 import static com.james.ds.Utils.pln;
 /**
- * @author: jiao.li
- * Date: 2015/8/25 16:10
+ * 数字相关的
  */
 public class Number {
 
@@ -114,6 +113,35 @@ public class Number {
         }while (num2 != 0);
         return sumNum;
     }
+
+    /**
+     * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方
+     * @param base
+     * @param exponent
+     * @return
+     */
+    public static double Power(double base, int exponent) {
+        if(equal(base, 0.0) && exponent < 0) return 0.0d;
+        double res = 1d;
+        int absExponent = exponent;
+        if(exponent < 0){
+            absExponent = exponent * -1;
+        }
+        while ( --absExponent >= 0){
+            res *= base;
+        }
+        if(exponent < 0){
+            res = 1.0 / res;
+        }
+        return res;
+    }
+    private static Boolean equal(double n1, double n2){
+        if(n1 - n2 > -0.0000001 && n2 - n1 > 0.0000001)
+            return true;
+        else
+            return false;
+    }
+
     public static void main(String[] args) {
         pln("NumberOf1 : "+ NumberOf1(-1));
 
@@ -126,6 +154,8 @@ public class Number {
 
 
         pln("add: "+ add(-5, -17));
+
+        pln("Power: "+ Power(2, 0));
 
 
     }

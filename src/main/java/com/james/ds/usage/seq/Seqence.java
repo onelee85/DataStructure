@@ -294,6 +294,71 @@ public class Seqence {
         return curr;
     }
 
+    /**
+     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+     * 实际上是一种斐波拉契数列
+     * 台阶数量         跳法
+     * 1               1
+     * 2               2
+     * 3               3
+     * 4               5
+     * @param number
+     * @return
+     */
+    static int jumpFloor(int number) {
+        if(number == 0) return 0;
+        if(number <= 1) return 1;
+        int pre1 = 1;
+        int pre2 = 1;
+        int num = 1;
+        int curr = pre2 +pre1;
+        while (++num <= number){
+            curr = pre2 +pre1;
+            pre1 = pre2;
+            pre2 = curr;
+        }
+        return curr;
+    }
+
+    /**
+     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。
+     * 求该青蛙跳上一个n级的台阶总共有多少种跳法。
+     * 通过归纳 F(n) = 2 ^(n -1)
+     * @param target
+     * @return
+     */
+    public static int JumpFloorII(int target) {
+        if(target <= 0) return 0;
+        if(target == 1) return 1;
+        int sum = 1;
+        while ( --target > 0){
+            sum *= 2;
+        }
+        return sum;
+    }
+
+    /**
+     * 斐波拉契数列
+     * 我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。
+     * 请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
+     * @param target
+     * @return
+     */
+    public static int RectCover(int target) {
+        if(target == 0) return 1;
+        if(target <= 1) return 1;
+        int pre1 = 1;
+        int pre2 = 1;
+        int num = 1;
+        int curr = pre2 +pre1;
+        while (++num <= target){
+            curr = pre2 +pre1;
+            pre1 = pre2;
+            pre2 = curr;
+        }
+        return curr;
+    }
+
     public static void main(String[] args) {
         Integer[] arrs = {1, -2, 3, 10, -4, 7, 2, -5};
         findMaxSumOfSubSeq(arrs);
@@ -312,7 +377,7 @@ public class Seqence {
         pln("findContinuousSeq  : ");
         findContinuousSeq(15);
 
-        Integer numOfFibonacci = 45;
+        Integer numOfFibonacci = 3;
         long begin = System.currentTimeMillis();
         pln("Fibonacci  : " + Fibonacci(numOfFibonacci));
         pln("Fibonacci cost time  : " + (System.currentTimeMillis() - begin));
@@ -320,5 +385,9 @@ public class Seqence {
         begin = System.currentTimeMillis();
         pln("Fibonacci v1 : " + FibonacciV1(numOfFibonacci));
         pln("Fibonacci V1 cost time  : " + (System.currentTimeMillis() - begin));
+
+        pln("jumpFloor : " + jumpFloor(1));
+        pln("JumpFloorII : " + JumpFloorII(4));
+        pln("RectCover : " + RectCover(4));
     }
 }
