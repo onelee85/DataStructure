@@ -23,14 +23,14 @@ public class Utils {
     }
     public static void plns(Object[] objs){
         for (Object obj : objs){
-            System.out.print(obj + "\t");
+            System.out.print(obj + " ");
         }
         System.out.println();
     }
 
     public static void plns(List objs){
         for (Object obj : objs){
-            System.out.print(obj + "\t");
+            System.out.print(obj + " ");
         }
         System.out.println();
     }
