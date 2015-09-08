@@ -8,6 +8,28 @@ import static com.james.ds.Utils.pn;
  */
 public class TreeQuestion {
 
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode(int x) { val = x; }
+
+        public static void printByPre(TreeNode node){
+            if(node == null) return;
+            pn(node.val + ",");
+            printByPre(node.left);
+            printByPre(node.right);
+        }
+
+        public static void printByIn(TreeNode node){
+            if(node == null) return;
+            printByPre(node.left);
+            pn(node.val + ",");
+            printByPre(node.right);
+        }
+    }
+
+
     /**
      * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
      * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
@@ -61,6 +83,58 @@ public class TreeQuestion {
         return root;
     }
 
+    /**
+     * 输入两颗二叉树A，B，判断B是不是A的子结构。
+     * 解：
+     * 1.找到相等的root
+     * 2.判断其子树是否相同
+     * 3.如果不其子树，则继续遍历A树
+     * @param root1
+     * @param root2
+     * @return
+     */
+    public static boolean HasSubtree(TreeNode root1,TreeNode root2) {
+        Boolean res = Boolean.FALSE;
+        if(root1 != null && root2 != null){
+            if(root1.val == root2.val)
+                res = hasSameTree(root1, root2);
+            if(!res)
+                res = HasSubtree(root1.left, root2);
+            if(!res)
+                res = HasSubtree(root1.right, root2);
+        }
+        return res;
+    }
+
+    private static Boolean hasSameTree(TreeNode root1,TreeNode root2){
+        if(root2 == null) return Boolean.TRUE;
+
+        if(root1 == null) return Boolean.FALSE;
+
+        if(root1.val != root2.val)
+            return Boolean.FALSE;
+
+        return hasSameTree(root1.left, root2.left) &&
+                hasSameTree(root1.right, root2.right);
+    }
+
+    /**
+     *操作给定的二叉树，将其变换为源二叉树的镜像。
+     * @param root
+     */
+    public static void Mirror(TreeNode root) {
+        if(root == null || (root.left == null && root.right == null)) return;
+        TreeNode left = root.left;
+        root.left = root.right;
+        root.right = left;
+        if(root.left != null){
+            Mirror(root.left);
+        }
+        if(root.right != null){
+            Mirror(root.right);
+        }
+    }
+
     public static void main(String[] args) {
         int [] pre = {1,2,4,7,3,5,6,8};
         int [] in = {4,7,2,1,5,3,8,6};
@@ -69,26 +143,44 @@ public class TreeQuestion {
         TreeNode.printByPre(root);
         pln();
         TreeNode.printByIn(root);
-    }
-}
+        pln();
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-    TreeNode(int x) { val = x; }
+        TreeNode rootA = new TreeNode(8);
+        TreeNode node8 = new TreeNode(8);
+        TreeNode node9 = new TreeNode(9);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node7 = new TreeNode(7);
+        rootA.left = node8;
+        rootA.right = new TreeNode(7);
+        node8.left = node9;
+        node8.right = node2;
+        node2.left = node4;
+        node2.right = node7;
 
-    public static void printByPre(TreeNode node){
-       if(node == null) return;
-       pn(node.val + ",");
-       printByPre(node.left);
-       printByPre(node.right);
-    }
+        TreeNode rootB = new TreeNode(8);
+        rootB.left = new TreeNode(1);
+        rootB.right = new TreeNode(2);
 
-    public static void printByIn(TreeNode node){
-        if(node == null) return;
-        printByPre(node.left);
-        pn(node.val + ",");
-        printByPre(node.right);
+        pln("hasSameTree:"+ HasSubtree(rootA, rootB));
+
+        //8,6,10,5,7,9,11
+        //8,6,5,7,10,9,11,
+        TreeNode root1 = new TreeNode(8);
+        TreeNode n6 = new TreeNode(6);
+        TreeNode n10 = new TreeNode(10);
+        TreeNode n5= new TreeNode(5);
+        TreeNode n7= new TreeNode(7);
+        TreeNode n9= new TreeNode(9);
+        TreeNode n11= new TreeNode(11);
+        root1.left = n6;
+        root1.right = n7;
+        n6.left = n10;
+        n6.right = n5;
+        n7.left = n9;
+        n7.right = n11;
+        TreeNode.printByPre(root1);pln();
+        Mirror(root1);
+        TreeNode.printByPre(root1);
     }
 }

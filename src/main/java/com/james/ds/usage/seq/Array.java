@@ -1,5 +1,6 @@
 package com.james.ds.usage.seq;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -142,6 +143,71 @@ public class Array {
         return (num & 1) == 0;
     }
 
+    /**
+     * 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，
+     * 例如，如果输入如下矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+     * 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+     * @param matrix
+     * @return
+     */
+    public static ArrayList<Integer> printMatrix(int [][] matrix) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if(matrix == null) return list;
+        //2对角点[0, 0][3, 3]组成一个圈
+        int startX = 0;
+        int startY = 0;
+        int endX = matrix.length-1;
+        int endY = matrix[0].length-1;
+        //打印完一圈 缩减对角点一圈
+        while (startX <= endX && startY <= endY){
+            printEdge(list, matrix, startX++, startY++, endX--, endY--);
+        }
+        return list;
+    }
+
+    /**
+     * 打印边
+     */
+    private static void printEdge(ArrayList<Integer> list , int [][] matrix, int startX, int startY, int endX, int endY){
+        //矩阵只有一行
+        if(startX == endX){
+            for (int i = startX; i <= endY; i++) {
+                list.add(matrix[startX][i]);
+            }
+        }
+        //矩阵只有一列
+        else if(startY == endY){
+            for (int i = startY; i <= endX; i++) {
+                list.add(matrix[i][endY]);
+            }
+        }else{//一般情况
+            int currX = startX;
+            int currY = startY;
+            //左至右打印行
+            while(currX != endY){
+                list.add(matrix[startX][currX]);
+                currX++;
+            }
+            //上到下打印列
+            while(currY != endX){
+                list.add(matrix[currY][endY]);
+                currY++;
+            }
+            //右至左打印行
+            while(currX != startX){
+                list.add(matrix[endX][currX]);
+                currX--;
+            }
+            //下至上打印列
+            while(currY != startY){
+
+                list.add(matrix[currY][startY]);
+                currY--;
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         int [][] matrix = { {1, 2, 8, 9},
                             {2, 4, 9, 12},
@@ -161,6 +227,29 @@ public class Array {
         for (int i = 0; i < needReOrders.length; i++) {
             pn(needReOrders[i] + " ");
         }
+        pln();
+        int [][] matrix1 = {{1, 2, 8, 9}};
+        int [][] matrix2 = {{1},{2},{4},{6}};
+        int [][] matrix3 = {{1}};
+        int [][] matrix4 = { {1, 2, 8, 9},
+                             {2, 4, 9, 12},
+                             {4, 7, 10,13}};
+        int [][] matrix5 = { {1, 2, 8},
+                             {2, 4, 9},
+                             {4, 7, 10},
+                             {6, 8, 11}};
+        pln("printMatrix1 : ");
+        plns(printMatrix(matrix1));
+        pln("printMatrix2 : ");
+        plns(printMatrix(matrix2));
+        pln("printMatrix3 : ");
+        plns(printMatrix(matrix3));
+        pln("printMatrix4 : ");
+        plns(printMatrix(matrix4));
+        pln("printMatrix5 : ");
+        plns(printMatrix(matrix5));
+        pln("printMatrix : ");
+        plns(printMatrix(matrix));
         //plns(arrays);
     }
 }
