@@ -1,5 +1,7 @@
 package com.james.ds.usage.tree;
 
+import com.james.ds.tree.TreeNode;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
@@ -205,6 +207,43 @@ public class TreeQuestion {
             path.remove(path.size()-1);
     }
 
+
+
+    /**
+     * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+     * @param pRootOfTree
+     * @return
+     */
+    public static TreeNode Convert(TreeNode pRootOfTree) {
+        if(pRootOfTree == null) return null;
+        convertReturnNode(pRootOfTree);
+        TreeNode headNode = lastNodeInLink;
+        //返回头节点
+        while(headNode.left != null){
+            headNode = headNode.left;
+        }
+        return headNode;
+    }
+    private static TreeNode lastNodeInLink = null;
+    private static void convertReturnNode(TreeNode currRoot){
+        if(currRoot == null) return ;
+        //如果当前节点有左子树 遍历左子树
+        if(currRoot.left != null)
+            convertReturnNode(currRoot.left);
+
+        //左子树遍历完 当前节点一定比链表尾部指针大
+        currRoot.left = lastNodeInLink;// 左指针指向尾部指针节点
+        if(lastNodeInLink != null)
+            lastNodeInLink.right = currRoot; //如果链表尾部指针节点存在 尾部指针节点右指针指向当前节点
+
+        //移动链表尾节点指向当前节点
+        lastNodeInLink = currRoot;
+
+        //继续遍历右子树
+        if(currRoot.right != null)
+            convertReturnNode(currRoot.right);
+    }
+
     public static void main(String[] args) {
         int [] pre = {1,2,4,7,3,5,6,8};
         int [] in = {4,7,2,1,5,3,8,6};
@@ -253,13 +292,43 @@ public class TreeQuestion {
         Mirror(root1);
         TreeNode.printByPre(root1);
         pln();
+
         pln("PrintFromTopToBottom:");
         plns(PrintFromTopToBottom(rootA));
         pln();
+
         pln("FindSumOfPath:");
         ArrayList<ArrayList<Integer>> list = FindPath(rootA, 15);
         for (ArrayList<Integer> path : list){
             plns(path);
+        }
+
+        pln("Bst convert to linklist:");
+        TreeNode bst = new TreeNode(5);
+        TreeNode bst4 = new TreeNode(4);
+        TreeNode bst3 = new TreeNode(3);
+        TreeNode bst2 = new TreeNode(2);
+        TreeNode bst1 = new TreeNode(1);
+        TreeNode bst14 = new TreeNode(14);
+        TreeNode bst16 = new TreeNode(16);
+        bst.left = bst4;
+        //bst.right = bst14;
+        bst4.left = bst3;
+        bst3.left = bst2;
+        //bst6.right = bst8;
+        //bst14.left = bst12;
+        bst2.left = bst1;
+        TreeNode linklist = Convert(bst);
+        //打印链表
+        while(linklist != null){
+            pn(linklist.val + " ");
+            if(linklist.right == null) break;
+            linklist = linklist.right;
+        }
+        pln();
+        while(linklist != null){
+            pn(linklist.val + " ");
+            linklist = linklist.left;
         }
     }
 }

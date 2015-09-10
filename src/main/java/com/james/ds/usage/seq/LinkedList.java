@@ -4,6 +4,7 @@ import com.james.ds.list.Link;
 import com.james.ds.list.LinkedNode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.james.ds.Utils.pln;
 import static com.james.ds.Utils.plns;
@@ -181,6 +182,21 @@ public class LinkedList {
         RandomListNode(int label) {
             this.label = label;
         }
+
+        public static void prints(RandomListNode head){
+            List<Integer> list = new ArrayList<Integer>();
+            while (head != null){
+                list.add(head.label);
+                if(head.random != null){
+                    pn(head.label + " -> " + head.random.label + ",  ");
+                }
+                head = head.next;
+            }
+            pln();
+            for (Integer v : list){
+                pn(v + " -> ");
+            }
+        }
     }
 
     /**
@@ -189,8 +205,65 @@ public class LinkedList {
      * @return
      */
     public static RandomListNode Clone(RandomListNode pHead){
-        RandomListNode newHead = new RandomListNode(pHead.label);
-        return newHead;
+        if(pHead == null) return null;
+        copyNewListNode(pHead);
+        connectRandomNode(pHead);
+        return splitNode(pHead);
+        //return null;
+    }
+
+    /**
+     * 先复制主要指针的节点
+     * 复制每个链表节点指向复制的节点
+     * A->A`->B->B`->C->C`
+     * @param pHead
+     */
+    private static void copyNewListNode(RandomListNode pHead){
+        RandomListNode pNode = pHead;
+        while(pNode != null){
+            RandomListNode newNode = new RandomListNode(pNode.label);
+            RandomListNode preNext = pNode.next;
+            pNode.next = newNode;
+            newNode.next = preNext;
+            pNode = preNext;
+        }
+    }
+
+    /**
+     * 链接特殊指针
+     * 那么复制出来的node是前一个特殊指针指向的下一个节点
+     * @param pHead
+     */
+    private static void connectRandomNode(RandomListNode pHead){
+        RandomListNode pNode = pHead;
+        while(pNode != null){
+            RandomListNode copyNode = pNode.next;
+            if(pNode.random != null)
+                copyNode.random = pNode.random.next;
+            pNode = copyNode.next;
+        }
+    }
+
+    /**
+     * 拆分链表
+     * @param pHead
+     * @return
+     */
+    private static RandomListNode splitNode(RandomListNode pHead){
+        RandomListNode pNode = pHead;
+        RandomListNode pNewNode = pHead.next;
+        RandomListNode pNewHead = pNewNode;
+        while(pNode != null && pNewNode != null){
+            if(pNode.next != null){
+                pNode.next = pNode.next.next;
+            }
+            pNode = pNode.next;
+            if(pNewNode.next != null){
+                pNewNode.next = pNewNode.next.next;
+            }
+            pNewNode = pNewNode.next;
+        }
+        return pNewHead;
     }
 
     public static void main(String[] args) {
@@ -256,6 +329,23 @@ public class LinkedList {
         n9.next = n11;
         n8.prints();
         Merge(n7, n8).prints();
+
+        RandomListNode rnode1 = new RandomListNode(1);
+        RandomListNode rnode2 = new RandomListNode(2);
+        RandomListNode rnode3 = new RandomListNode(3);
+        RandomListNode rnode4 = new RandomListNode(4);
+        RandomListNode rnode5 = new RandomListNode(5);
+        rnode1.next = rnode2;
+        rnode2.next = rnode3;
+        rnode3.next = rnode4;
+        rnode4.next = rnode5;
+        rnode1.random = rnode1;
+        rnode4.random = rnode2;
+        rnode2.random = rnode4;
+        RandomListNode.prints(rnode1);
+        pln("\n Clone-----");
+        RandomListNode newNode = Clone(rnode1);
+        RandomListNode.prints(newNode);
     }
 }
 
