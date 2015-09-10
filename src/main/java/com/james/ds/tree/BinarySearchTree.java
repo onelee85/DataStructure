@@ -149,7 +149,7 @@ public class BinarySearchTree<T> {
     /**
      * 验证后序遍历序列是否为搜索树
      */
-    public static Boolean verifySquenceOfBST(Integer[] seq, int begin, int end) {
+    public static Boolean verifySquenceOfBST(int[] seq, int begin, int end) {
 
         if (seq == null || seq.length == 0) return Boolean.FALSE;
 

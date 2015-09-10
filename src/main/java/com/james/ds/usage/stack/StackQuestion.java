@@ -63,6 +63,37 @@ public class StackQuestion {
         }
     }
 
+    /**
+     * 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。
+     * 假设压入栈的所有数字均不相等。
+     * 例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，
+     * 但4,3,5,1,2就不可能是该压栈序列的弹出序列。
+     * @return
+     */
+    public static boolean IsPopOrder(int [] pushA,int [] popA) {
+        if(pushA == null || pushA.length == 0 ||
+                popA == null || popA.length != pushA.length)
+            return Boolean.FALSE;
+        int[] stack = new int[pushA.length];
+        int topIndex = -1;
+        int popIndex = 0;
+        for (int i = 0; i < pushA.length; i++) {
+            //第一个序列入栈
+            stack[++topIndex] = pushA[i];
+            //判断栈顶元素是不是和popA当前元素相等
+            if(stack[topIndex] ==  popA[popIndex]){
+                //相等则弹出栈顶元素
+                topIndex--;
+                popIndex++;
+            }
+        }
+        while (topIndex >= 0){
+            if(stack[topIndex--] !=  popA[popIndex++])
+                return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
+
     public static void main(String[] args) {
         StackAsQuene squene = new StackAsQuene();
         squene.push(1);
@@ -90,5 +121,9 @@ public class StackQuestion {
         pln("top after pop  : "+stackWithMin.top());
         stackWithMin.pop();
         pln("min after pop  : "+stackWithMin.min());
+
+        int [] pushA = {1,2,3,4,5};
+        int [] popA = {4,5,3,2,1};
+        pln("IsPopOrder  : " + IsPopOrder(pushA, popA));
     }
 }

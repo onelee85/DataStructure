@@ -12,7 +12,7 @@ import static com.james.ds.Utils.pn;
  */
 public class FindPathOfSum {
 
-    private static void FindPtah(BinaryTree binaryTree, Integer value){
+    private static void FindPath(BinaryTree binaryTree, Integer value){
         Stack<Integer> path = new Stack<Integer>();
         FindPath(binaryTree.root(), value, path, 0);
     }
@@ -58,6 +58,6 @@ public class FindPathOfSum {
         BinaryTree binaryTree = new BinaryTree(nodea);
 
         //打印输出值为22的路径
-        FindPtah(binaryTree, 22);
+        FindPath(binaryTree, 22);
     }
 }

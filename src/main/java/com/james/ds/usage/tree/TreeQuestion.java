@@ -1,6 +1,12 @@
 package com.james.ds.usage.tree;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Stack;
+
 import static com.james.ds.Utils.pln;
+import static com.james.ds.Utils.plns;
 import static com.james.ds.Utils.pn;
 
 /**
@@ -135,6 +141,70 @@ public class TreeQuestion {
         }
     }
 
+    /**
+     * 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+     * 解:层次遍历
+     * @param root
+     * @return
+     */
+    public static ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if(root == null) return list;
+        Queue<TreeNode> queue = new ArrayDeque<TreeNode>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            TreeNode node = queue.remove();
+            list.add(node.val);
+            if(node.left != null)
+                queue.add(node.left);
+            if(node.right != null)
+                queue.add(node.right);
+        }
+        return list;
+    }
+
+    /**
+     * 输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。
+     * 路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+     * @param root
+     * @param target
+     * @return
+     */
+    public static ArrayList<ArrayList<Integer>> FindPath(TreeNode root, int target) {
+        ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+        if(root == null || target <= 0) return list;
+        ArrayList<Integer> path = new ArrayList<Integer>();
+        FindPath(list, root, target, path, 0);
+        return list;
+    }
+
+    public static void FindPath(ArrayList<ArrayList<Integer>> list, TreeNode node, int expectSum, ArrayList<Integer> path, int currentSum) {
+        int curr_val = node.val;
+        currentSum += curr_val;
+        path.add(curr_val);
+        //如果为叶子节点 并且当前值等于期待值 则记录路径
+        Boolean isLead = node.left == null && node.right == null;
+        if(isLead && expectSum == currentSum){
+            ArrayList<Integer> onePath = new ArrayList<Integer>();
+            onePath.addAll(path);
+            list.add(onePath);
+        }
+
+        TreeNode lchild = node.left;
+        if (lchild != null) {// 如果有左子树
+            FindPath(list, lchild, expectSum, path, currentSum);
+        }
+
+        TreeNode rchild = node.right;
+        if (rchild != null) {// 如果有右子树
+            FindPath(list, rchild, expectSum, path, currentSum);
+        }
+        //回退至上一节点
+        currentSum -= curr_val;
+        if(!path.isEmpty())
+            path.remove(path.size()-1);
+    }
+
     public static void main(String[] args) {
         int [] pre = {1,2,4,7,3,5,6,8};
         int [] in = {4,7,2,1,5,3,8,6};
@@ -182,5 +252,14 @@ public class TreeQuestion {
         TreeNode.printByPre(root1);pln();
         Mirror(root1);
         TreeNode.printByPre(root1);
+        pln();
+        pln("PrintFromTopToBottom:");
+        plns(PrintFromTopToBottom(rootA));
+        pln();
+        pln("FindSumOfPath:");
+        ArrayList<ArrayList<Integer>> list = FindPath(rootA, 15);
+        for (ArrayList<Integer> path : list){
+            plns(path);
+        }
     }
 }

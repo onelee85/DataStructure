@@ -69,7 +69,7 @@ public class Test {
 		binaryTree.travIn(bst.root());
 		pln();
 
-        Integer[] seqs = {5,7,6,9,11,10,8};
+        int[] seqs = {5,7,6,9,11,10,8};
         Integer[] seqs2 = {7,4,6,5};
         pln("判断是否搜索树："+ BinarySearchTree.verifySquenceOfBST(seqs, 0, seqs.length-1));
 
