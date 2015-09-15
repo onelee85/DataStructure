@@ -208,6 +208,43 @@ public class Array {
 
     }
 
+    /**
+     * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+     * 例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，
+     * 超过数组长度的一半，因此输出2。
+     * 解：
+     * 由于这个数的个数超过整个长度的一半，那么这个数字次数之和一定大于剩下其他数字的和
+     * 遇到相同的数字加1， 遇到不同的则减去1，如果当前计数为0，则记录下个数;
+     * 那么最后要找的数字肯定是count为1的数字
+     * @param array
+     * @return
+     */
+    public static int MoreThanHalfNum_Solution(int [] array) {
+        if (array == null || array.length <= 1) return 0;
+        int num = array[0];
+        int count = 1;
+        for (int i = 1; i < array.length; i++) {
+            if(num == array[i]){
+                count++;
+            }else{
+                count--;
+            }
+            if(count == 0){
+                num = array[i];
+                count = 1;
+            }
+        }
+        if(count < 1) return 0;
+        int total = 0;
+        for (int i = 0; i < array.length; i++) {
+            if(num == array[i]){
+                total++;
+            }
+        }
+        if(total <= array.length/2) return 0;
+        return num;
+    }
+
     public static void main(String[] args) {
         int [][] matrix = { {1, 2, 8, 9},
                             {2, 4, 9, 12},
@@ -251,5 +288,8 @@ public class Array {
         pln("printMatrix : ");
         plns(printMatrix(matrix));
         //plns(arrays);
+
+        int [] arrs2 = {1,2,3,2,2,2,5,4,2};
+        pln("MoreThanHalfNum_Solution: "+MoreThanHalfNum_Solution(arrs2));
     }
 }
